@@ -5,4 +5,5 @@ import { PaystatusComponent } from './paystatus/paystatus.component';
 export const routes: Routes = [
     { path : '', component : PaymentPageComponent},
     { path : 'status', component : PaystatusComponent}
+    // { path: 'payment-history', component: PaymentHistoryComponent}
 ];

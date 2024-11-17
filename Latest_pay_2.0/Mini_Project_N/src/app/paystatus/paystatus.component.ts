@@ -121,9 +121,10 @@ import { take } from 'rxjs';
   styleUrls: ['./paystatus.component.css'], // Fixed 'styleUrls'
 })
 export class PaystatusComponent implements OnInit {
+  currentDate: Date = new Date();
   status: boolean = true;
   order?: Order;
-
+  trackingStatus: string[] = ["Ordered", "Shipped", "On the way", "Delivered"];
   constructor(
     private route: ActivatedRoute,
     private paymentService: PaymentService,
@@ -194,6 +195,42 @@ export class PaystatusComponent implements OnInit {
       error: err => console.error('Error fetching order:', err),
     });
   }
+  // how to dislplay order details in the payststus component html file
+  // <div *ngIf="order">
+  // <h2>Order Details</h2>
+  // <p>Order ID: {{ order.id }}</p>
+  // <p>Customer Name: {{ order.customerName }}</p>
+  // <p>Customer Email: {{ order.customerEmail }}</p>
+  // <p>Customer Phone: {{ order.customerPhone }}</p>
+  // <p>Amount: {{ order.amount }}</p>
+  // <p>Address: {{ order.address }}</p>
+  // <p>Status: {{ order.status }}</p>
+  // <p>Tracking Status: {{ trackingStatus[order.trackingStatus] }}</p>
+  //payment id 
+  // <p>Payment ID: {{ paymentResponse.paymentId }}</p>
+  // </div>
+
+  // <div *ngIf="!order">
+  // <p>Loading order details...</p>
+  // </div>
+
+  // <button (click)="returnToHome()">Return to Home</button>
+
+  // <div *ngIf="status">
+
+  // <h2>Payment Successful</h2>
+  // <p>Order ID: {{ order?.id }}</p>
+  // <p>Amount: {{ order?.amount }}</p>
+  // <p>Payment ID: {{ paymentResponse.paymentId }}</p>
+  // <p>Payment Signature: {{ paymentResponse.paymentSignature }}</p>
+  // <p>Payment Link ID: {{ paymentResponse.paymentLinkId }}</p>
+  // </div>
+
+
+
+
+   
+
 
 }
 

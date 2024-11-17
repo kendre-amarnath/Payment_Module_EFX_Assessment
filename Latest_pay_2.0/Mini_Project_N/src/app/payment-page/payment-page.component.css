@@ -1,121 +1,226 @@
 /* Center the entire payment-page container */
 .payment-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Full viewport height */
-    padding: 20px;
-    background-color: #f0f0f0; /* Optional background color */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  padding: 20px;
+  background-image: url('/assets/bg7.jpg'); /* Background image */
+  background-color: #e7e7e7; /* Optional background color */
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center center; /* Centers the image */
+  background-repeat: no-repeat;
+}
+
+
+
+
+/* Style for the container that holds order summary and payment details */
+.container {
+  display: flex;
+  max-width: 900px;
+  width: 100%;
+  gap: 1px;
+  background-color: #e8e4fd; /* Optional background for the content area */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+  border-radius: 8px; /* Rounded corners for the container */
+  padding: 20px; /* Ensure padding within container */
+}
+@media(max-width: 768px) {
+  .payment-page {
+      width: 0%;
   }
-  
-  /* Style for the container that holds order summary and payment details */
+}
+
+/* Error styling */
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+/* Order summary and payment details styling */
+.order-summary, .payment-details {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Rounded corners for the card elements */
+  background-color: #f9f9f9;
+  max-width: 100%; /* Ensure it doesn’t overflow */
+  box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+/* Heading styling */
+.order-summary h3, .payment-details h3 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Remove list styling */
+.order-summary ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Product item container styling */
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.product-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.product-details {
+  flex-grow: 1;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.quantity-controls button {
+  padding: 2px 8px;
+  background-color: #0e0e0e;
+  color: white;
+  border: none;
+  border-radius: 4px; /* Rounded corners for buttons */
+  cursor: pointer;
+}
+
+.quantity-controls button:hover {
+  background-color: #567fbc;
+}
+
+.total-amount {
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+/* Form fields within payment-details */
+.payment-details .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.payment-details label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.payment-details input, .payment-details textarea {
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Rounded corners for input and text area */
+  width: 100%; /* Ensures input takes full width */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+/* Ensure text area does not overflow */
+.payment-details textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 50px;
+  max-height: 200px; /* Prevent it from becoming too large */
+  overflow: auto; /* Allow scrolling if content overflows */
+}
+
+/* Button styling for place order */
+.place-order-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(64, 64, 255);
+  color: white;
+  border: none;
+  border-radius: 8px; /* Rounded corners for the button */
+  cursor: pointer;
+  font-size: 1.1em;
+}
+
+.place-order-btn:hover {
+  background-color: #050505;
+}
+
+/* General styling for input fields and text area */
+form .form-group input[type="text"],
+form .form-group input[type="email"],
+form .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Rounded corners */
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+/* Blue border on focus */
+form .form-group input[type="text"]:focus,
+form .form-group input[type="email"]:focus,
+form .form-group textarea:focus {
+  border-color: rgb(5, 113, 255); /* blue border */
+  outline: none;
+}
+
+/* Responsive adjustments for smaller screens */
+@media(max-width: 768px) {
   .container {
-    display: flex;
-    max-width: 900px;
-    width: 100%;
-    gap: 1px;
-    background-color: #ffffff; /* Optional background for the content area */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
-    border-radius: 8px;
-    /* padding: px; */
-  }
-  
-  .order-summary, .payment-details {
-    flex: 1;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .order-summary h3, .payment-details h3 {
-    margin-top: 0;
-    font-size: 1.5em;
-    color: #333;
-  }
-  
-  .order-summary ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .product-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .product-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 15px;
-  }
-  
-  .product-details {
-    flex-grow: 1;
-  }
-  
-  .quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .quantity-controls button {
-    padding: 2px 8px;
-    background-color: #0e0e0e;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .quantity-controls button:hover {
-    background-color: #121213;
-  }
-  
-  .total-amount {
-    font-weight: bold;
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #333;
-  }
-  
-  .payment-details .form-group {
-    display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
   }
-  
-  .payment-details label {
-    font-weight: 600;
-    margin-bottom: 5px;
+
+  .order-summary, .payment-details {
+    max-width: 100%; /* Make it responsive for small screens */
+    margin-bottom: 20px;
   }
-  
-  .payment-details input, .payment-details textarea {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .payment-details textarea {
-    resize: vertical;
-  }
-  
+
   .place-order-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #101010;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1em;
   }
-  
-  .place-order-btn:hover {
-    background-color: #050505;
-  }
-  
+}
+
+/* Disabled button styling */
+.place-order-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Add Item Dropdown */
+.add-item-dropdown {
+  margin-bottom: 20px;
+}
+
+.add-item-dropdown label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.add-item-dropdown select {
+  padding: 8px;
+  font-size: 14px;
+  margin-top: 5px;
+  border-radius: 8px; /* Rounded corners for the dropdown */
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px; /* Rounded corners for delete button */
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}

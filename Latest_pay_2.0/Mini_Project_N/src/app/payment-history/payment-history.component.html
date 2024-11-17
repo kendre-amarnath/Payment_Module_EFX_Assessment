@@ -1,0 +1,36 @@
+<!-- <div class="payment-history-page">
+    <div class="container">
+      <div class="history-title">
+        <h2>Payment History</h2>
+      </div>
+  
+      <div *ngIf="isLoading" class="loading">Loading...</div>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  
+      <div *ngIf="!isLoading && paymentHistory.length > 0" class="payment-history-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let payment of paymentHistory">
+              <td>{{ payment.orderId }}</td>
+              <td>{{ payment.paymentDate | date }}</td>
+              <td>{{ payment.amount | currency: "INR" }}</td>
+              <td>{{ payment.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <div *ngIf="paymentHistory.length === 0 && !isLoading" class="no-payments">
+        <p>No payments found.</p>
+      </div>
+    </div>
+  </div>
+   -->

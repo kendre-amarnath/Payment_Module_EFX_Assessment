@@ -20,7 +20,6 @@ public class PaymentResponseController {
     @Autowired
     private PaymentResponseService paymentResponseService;
 
-//    // Endpoint to save payment details
 //    @PostMapping
 //    public ResponseEntity<PaymentResponse> setPaymentDetails(@RequestBody PaymentResponse paymentResponse) {
 //        PaymentResponse savedResponse = paymentResponseService.setPaymentDetails(paymentResponse);
@@ -33,15 +32,13 @@ public class PaymentResponseController {
         return  ResponseEntity.status(HttpStatus.CREATED).body(paymentResponseService.setPaymentDetails(paymentResponse));
     }
 
-
-    // Endpoint to get all payment details
     @GetMapping
     public ResponseEntity<List<PaymentResponse>> getAllPaymentDetails() {
         List<PaymentResponse> paymentResponses = paymentResponseService.getAllPaymentDetails();
         return ResponseEntity.ok(paymentResponses);
     }
 
-    // Endpoint to get payment details by orderId
+
     @GetMapping("/order/{orderId}")
     public ResponseEntity<PaymentResponse> getPaymentDetailsByOrderId(@PathVariable Long orderId) {
         PaymentResponse paymentResponse = paymentResponseService.getPaymentDetailsByOrderId(orderId).get();
@@ -54,19 +51,16 @@ public class PaymentResponseController {
         }
     }
 
-    // Endpoint to get payment details by paymentId
+
     @GetMapping("/payment/{paymentId}")
     public ResponseEntity<PaymentResponse> getPaymentDetailsByPaymentId(@PathVariable("orderId") Long orderId) {
-        // Log the incoming request for debugging
         System.out.println("Received request for payment ID: " + orderId);
 
-        // Fetch the payment details using the service layer
         Optional<PaymentResponse> paymentResponse = paymentResponseService.getPaymentDetailsByOrderId(orderId);
 
-        // Return response: 200 OK if found, 404 Not Found if not
         return paymentResponse
-                .map(ResponseEntity::ok) // 200 OK with payment details if present
-                .orElseGet(() -> ResponseEntity.notFound().build()); // 404 if no payment details found
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

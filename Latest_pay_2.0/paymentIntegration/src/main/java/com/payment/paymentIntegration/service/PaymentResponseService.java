@@ -35,8 +35,9 @@ public class PaymentResponseService {
 
         }
         else{
-            return null;
+            return Optional.empty();
         }
+
     }
 
 //    public Optional<PaymentResponse> getPaymentDetailsByPaymentId(String paymentId) {

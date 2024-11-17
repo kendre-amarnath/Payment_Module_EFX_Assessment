@@ -5,7 +5,7 @@ export class Payment {
     amount: number;
     address: string;
     status: string;
-  
+
   
     constructor(
       name: string,
