@@ -1,0 +1,6 @@
+<div *ngIf="status; else templateName">
+    <p>paystatus Success</p>
+</div>
+<ng-template #templateName>
+    <p>paystatus Failed</p>
+</ng-template>
