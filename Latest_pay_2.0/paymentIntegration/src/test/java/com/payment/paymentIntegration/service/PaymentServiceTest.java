@@ -23,7 +23,7 @@ public class PaymentServiceTest {
 
     @Test
     void testCreatePaymentLink() {
-        // Mock order and response
+
         Orders mockOrder = new Orders();
         mockOrder.setOrderId(1L);
         mockOrder.setAmount(1000);
@@ -34,18 +34,16 @@ public class PaymentServiceTest {
         mockResponse.setId("payment_link_123");
         mockResponse.setStatus("created");
 
-        // Mock RazorpayClient behavior
+
         when(razorpayClient.createPaymentLink(any(RazorpayRequest.class))).thenReturn(mockResponse);
 
-        // Invoke the service method
         RazorpayResponse response = paymentService.createPaymentLink(mockOrder);
 
-        // Assertions
         assertNotNull(response, "Response should not be null");
         assertNotNull(response.getId(), "Response ID should not be null");
         assertNotNull(response.getStatus(), "Response status should not be null");
 
-        // Verify the interaction with RazorpayClient
+
         verify(razorpayClient, times(1)).createPaymentLink(any(RazorpayRequest.class));
     }
 }
