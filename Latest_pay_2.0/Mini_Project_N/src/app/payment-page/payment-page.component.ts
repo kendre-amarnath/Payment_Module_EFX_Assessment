@@ -23,11 +23,11 @@ export class PaymentPageComponent {
   constructor(private paymentservice: PaymentService, private route: Router) {}
 
   products: Product[] = [
-    { name: 'JBL Headset', price: 199.99, quantity: 1, image: '/assets/jbl-headset.jpg' },
-    { name: 'Nike Shoes', price: 129.99, quantity: 1, image: '/assets/nike-shoes.jpg' },
-    { name: 'One Piece Manga', price: 9.99, quantity: 3, image: '/assets/one-piece-manga.jpg' },
-    { name: 'One Piece T-Shirt', price: 24.99, quantity: 2, image: '/assets/one-piece-tshirt.jpg' },
-    { name: 'Katana', price: 299.99, quantity: 1, image: '/assets/katana.jpg' }
+    { name: 'JBL Headset', price: 199.99, quantity: 0, image: '/assets/jbl-headset.jpg' },
+    { name: 'Nike Shoes', price: 129.99, quantity: 0, image: '/assets/nike-shoes.jpg' },
+    { name: 'One Piece Manga', price: 9.99, quantity: 0, image: '/assets/one-piece-manga.jpg' },
+    { name: 'One Piece T-Shirt', price: 24.99, quantity: 0, image: '/assets/one-piece-tshirt.jpg' },
+    { name: 'Katana', price: 299.99, quantity: 0, image: '/assets/katana.jpg' }
   ];
 
   totalAmount = this.calculateTotal();
@@ -62,7 +62,6 @@ export class PaymentPageComponent {
         // If the product exists, increase its quantity
         existingProduct.quantity++;
       } else {
-        // If the product does not exist, find it from productList and add it to the cart
         const newProduct = this.productList.find(product => product.name === this.selectedProductName);
         if (newProduct) {
           this.products.push({ ...newProduct, quantity: 1 });
@@ -91,8 +90,8 @@ export class PaymentPageComponent {
   productList: Product[] = [
     { name: 'JBL Headset', price: 199.99, quantity: 0, image: '/assets/jbl-headset.jpg' },
     { name: 'Nike Shoes', price: 129.99, quantity: 0, image: '/assets/nike-shoes.jpg' },
-    { name: 'One Piece Manga', price: 9.99, quantity: 0, image: '/assets/one-piece-manga.jpg' },
-    { name: 'One Piece T-Shirt', price: 24.99, quantity: 0, image: '/assets/one-piece-tshirt.jpg' },
-    { name: 'Katana', price: 299.99, quantity: 0, image: '/assets/katana.jpg' }
+    { name: 'One Piece Manga', price: 999, quantity: 0, image: '/assets/one-piece-manga.jpg' },
+    { name: 'One Piece T-Shirt', price: 2499, quantity: 0, image: '/assets/one-piece-tshirt.jpg' },
+    { name: 'Katana', price: 2999.9, quantity: 0, image: '/assets/katana.jpg' }
   ];
 }

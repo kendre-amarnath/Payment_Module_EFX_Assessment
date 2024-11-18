@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="title">Purchase Reciept</div>
+    <div class="title">Purchase Reciept <img src="assets/recipt.png" alt="recipt" style="background-color: #f9f9f9; width: 20px; height: 20px;"></div>
     <div class="info">
         <div class="row">
             <div class="col-7">
@@ -24,13 +24,14 @@
                 <span id="name"></span>  
             </div>
             <div class="col-3">
-                <span id="price">Amount: {{ order?.amount | currency: 'INR'  }}</span>
+                <span id="price">Paid Amount : {{ order?.amount | currency: 'INR'  }}     </span><img src="assets/check.png" alt="check" style="background-color: #f9f9f9; width: 20px; height: 20px;">
             </div>
+
             
         </div>
         <div class="row">
             <div class="col-9">
-                <span id="name">Shipping : 00</span>
+                <span id="name"><P>Shipping Address : Address: {{ order?.address }}</P> </span>
             </div>
             <!-- <div class="col-3">
                 <span id="price">&pound;33.00</span>
@@ -52,8 +53,8 @@
     <div class="progress-track">
         <ul id="progressbar">
             <li class="step0 active " id="step1">Ordered</li>
-            <li class="step0 active text-center" id="step2">Shipped</li>
-            <li class="step0 active text-right" id="step3">On the way</li>
+            <li class="step0 text-center" id="step2">Shipped</li>
+            <li class="step0 text-right" id="step3">On the way</li>
             <li class="step0 text-right" id="step4">Delivered</li>
         </ul>
     </div>
@@ -66,5 +67,8 @@
         </div>
         
        
+    </div>
+    <div class ="payment-button-container">
+        <button (click)="goToPaymentPage()" class ="btn btn-primary" >Order again</button>
     </div>
 </div>

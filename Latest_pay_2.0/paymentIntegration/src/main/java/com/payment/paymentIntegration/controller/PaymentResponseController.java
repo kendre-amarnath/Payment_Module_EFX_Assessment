@@ -58,9 +58,7 @@ public class PaymentResponseController {
 
         Optional<PaymentResponse> paymentResponse = paymentResponseService.getPaymentDetailsByOrderId(orderId);
 
-        return paymentResponse
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return paymentResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

@@ -5,7 +5,7 @@
   align-items: center;
   min-height: 100vh; /* Full viewport height */
   padding: 20px;
-  background-image: url('/assets/bg7.jpg'); /* Background image */
+  background-image: url('/assets/bg.jpg'); /* Background image */
   background-color: #e7e7e7; /* Optional background color */
   background-size: cover; /* Ensures the image covers the entire container */
   background-position: center center; /* Centers the image */
@@ -28,7 +28,7 @@
 }
 @media(max-width: 768px) {
   .payment-page {
-      width: 0%;
+      width: 80%;
   }
 }
 
@@ -84,16 +84,16 @@
 .quantity-controls {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 .quantity-controls button {
   padding: 2px 8px;
-  background-color: #0e0e0e;
+  background-color: #96c8fe;
   color: white;
   border: none;
-  border-radius: 4px; /* Rounded corners for buttons */
-  cursor: pointer;
+  border-radius: 4px; 
+  cursor: pointer;gap: 4px;
 }
 
 .quantity-controls button:hover {

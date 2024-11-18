@@ -2,7 +2,7 @@
   <div class="container">
     <!-- Order Summary Section (Left) -->
     <div class="order-summary">
-      <h3>Order Summary</h3>
+      <h3>Order Summary <img src="assets/shopping-list.png" alt="shopping-list" style="background-color: #f9f9f9; width: 20px; height: 20px;"></h3> 
           <!-- Add Product Dropdown beside Order Summary -->
     <div class="add-item-dropdown">
       <label for="add-product">Product Catalog: </label>
@@ -19,8 +19,11 @@
             <button (click)="decreaseQuantity(i)">-</button>
             <span>{{ product.quantity }}</span>
             <button (click)="increaseQuantity(i)">+</button>
-          </div>
-          <button (click)="deleteItem(i)">Delete</button> <!-- Delete button -->
+            <button (click)="deleteItem(i)" style="background-color: #f9f9f9;" >
+              <img src="assets/delete.png"  style="background-color: #f9f9f9; width: 20px; height: 20px;"/>
+          </button>
+                    </div>
+          <!-- Delete button -->
         </li>
       </ul>
       <h4 class="total-amount">Total: {{ totalAmount | currency: 'INR' }}</h4>
@@ -30,7 +33,7 @@
 
     <!-- Payment Details Section (Right) -->
     <div class="payment-details">
-      <h3>Shipping Details</h3>
+      <h3>Shipping Details   <img src="assets/van.png" alt="shopping-list" style="background-color: #f9f9f9; width: 20px; height: 20px;"></h3>
       <form #paymentForm="ngForm" (ngSubmit)="payNow(payment, $event)">
         <div class="form-group">
           <label>Name:</label>
@@ -39,7 +42,7 @@
         </div>
         <div class="form-group">
           <label>Email:</label>
-          <input type="email" name="email" [(ngModel)]="payment.email" required #email="ngModel" />
+          <input type="email" name="email" [(ngModel)]="payment.email" required pattern="^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$" #email="ngModel" />
           <div *ngIf="email.invalid && email.touched" class="error">Valid email is required</div>
         </div>
         <div class="form-group">
