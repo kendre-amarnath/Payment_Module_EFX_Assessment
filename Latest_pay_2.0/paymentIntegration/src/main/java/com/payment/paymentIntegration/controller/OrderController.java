@@ -37,9 +37,14 @@ public class OrderController {
     // TO fetch order from given id
     @GetMapping("/{id}")
     public ResponseEntity<Orders> getOrderById(@PathVariable Long id) {
-        Optional<Orders> order = ordersService.getOrderById(id);
-        return order.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Orders order = ordersService.getOrderById(id);
+        if(order == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        else{
+            return ResponseEntity.ok(order);
+        }
     }
 
 
@@ -48,7 +53,8 @@ public class OrderController {
     public ResponseEntity<Orders> updateOrderStatus(@RequestBody StatusRequestDto statusRequestDto) {
         Orders updatedOrder = ordersService.updateOrderStatus(statusRequestDto.getOrderId(),statusRequestDto.getStatus());
 
-        if (updatedOrder != null) {
+        if (updatedOrder != null)
+        {
             return ResponseEntity.ok(updatedOrder);
         }
         else

@@ -21,7 +21,7 @@
   max-width: 900px;
   width: 100%;
   gap: 1px;
-  background-color: #e8e4fd; /* Optional background for the content area */
+  background-color: #34a5e7; /* Optional background for the content area */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
   border-radius: 8px; /* Rounded corners for the container */
   padding: 20px; /* Ensure padding within container */
@@ -223,4 +223,9 @@ form .form-group textarea:focus {
 
 .delete-btn:hover {
   background-color: darkred;
+}
+
+
+.delete-icon:hover {
+  background-color: #567fbc;
 }

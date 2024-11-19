@@ -1,5 +1,6 @@
-package com.payment.paymentIntegration.client;
+package com.payment.paymentIntegration.config;
 
+import com.payment.paymentIntegration.client.RazorpayClient;
 import com.payment.paymentIntegration.config.RazorpayClientConfig;
 import com.payment.paymentIntegration.dto.RazorpayRequest;
 import com.payment.paymentIntegration.dto.RazorpayResponse;

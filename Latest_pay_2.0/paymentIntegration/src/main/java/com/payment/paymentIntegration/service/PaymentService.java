@@ -4,6 +4,7 @@ import com.payment.paymentIntegration.client.RazorpayClient;
 import com.payment.paymentIntegration.dto.RazorpayRequest;
 import com.payment.paymentIntegration.dto.RazorpayResponse;
 import com.payment.paymentIntegration.entity.Orders;
+import com.payment.paymentIntegration.exception.PaymentLinkCreationException;
 import com.payment.paymentIntegration.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,9 @@ public class PaymentService {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final SecureRandom random = new SecureRandom();
 
-    // Method to generate random three-character prefix for always giving the
-    private String generateRandomPrefix(int length) {
-        StringBuilder prefix = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
+    private String generateRandomPrefix() {
+        StringBuilder prefix = new StringBuilder(3);
+        for (int i = 0; i < 3; i++) {
             int index = random.nextInt(CHARACTERS.length());
             prefix.append(CHARACTERS.charAt(index));
         }
@@ -34,26 +34,28 @@ public class PaymentService {
     }
 
     public RazorpayResponse createPaymentLink(Orders ord) {
+        try {
+            String phoneNumber = ord.getContact();
+            String name = ord.getName();
 
-        String phoneNumber = ord.getContact();
-        String name = ord.getName();
+            RazorpayRequest request = new RazorpayRequest();
+            request.setAmount(ord.getAmount() * 100);
+            request.setExpire_by(Instant.now().getEpochSecond() + 45 * 60);
 
-        RazorpayRequest request = new RazorpayRequest();
-        request.setAmount(ord.getAmount() * 100);
-        request.setExpire_by(Instant.now().getEpochSecond() + 45 * 60); // Expiry time is 45 minutes from now
+            String randomPrefix = generateRandomPrefix();
+            request.setReference_id(randomPrefix + ord.getOrderId());
 
-        // Generate unique reference ID with random prefix
-        String randomPrefix = generateRandomPrefix(3);
-        request.setReference_id(randomPrefix + ord.getOrderId());
+            RazorpayRequest.Customer customer = new RazorpayRequest.Customer();
+            customer.setName(name);
+            customer.setContact("+91" + phoneNumber);
+            customer.setEmail(ord.getEmail());
+            request.setCustomer(customer);
 
-        RazorpayRequest.Customer customer = new RazorpayRequest.Customer();
-        customer.setName(name);
-        customer.setContact("+91" + phoneNumber);
-        customer.setEmail(ord.getEmail());
-        request.setCustomer(customer);
+            request.setDescription("Order Payment Link");
 
-        request.setDescription("-----------Order Payment Link-----------");
-
-        return razorpayClient.createPaymentLink(request);
+            return razorpayClient.createPaymentLink(request);
+        } catch (Exception ex) {
+            throw new PaymentLinkCreationException("Failed to create payment link: " + ex.getMessage());
+        }
     }
 }

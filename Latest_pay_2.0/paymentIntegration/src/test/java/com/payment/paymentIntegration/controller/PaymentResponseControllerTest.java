@@ -48,13 +48,14 @@ class PaymentResponseControllerTest {
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(mockResponses, response.getBody());
+
         verify(paymentResponseService, times(1)).getAllPaymentDetails();
     }
 
     @Test
     void testGetPaymentDetailsByOrderId() {
         PaymentResponse mockResponse = new PaymentResponse(); // Add fields
-        when(paymentResponseService.getPaymentDetailsByOrderId(123L)).thenReturn(Optional.of(mockResponse));
+        when(paymentResponseService.getPaymentDetailsByOrderId(123L)).thenReturn(mockResponse);
 
         ResponseEntity<PaymentResponse> response = paymentResponseController.getPaymentDetailsByOrderId(123L);
 

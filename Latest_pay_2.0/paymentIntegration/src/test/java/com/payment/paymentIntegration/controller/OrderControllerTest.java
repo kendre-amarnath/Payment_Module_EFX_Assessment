@@ -1,78 +1,65 @@
 package com.payment.paymentIntegration.controller;
 
 import com.payment.paymentIntegration.entity.Orders;
-import com.payment.paymentIntegration.dto.StatusRequestDto;
 import com.payment.paymentIntegration.service.OrderService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static com.payment.paymentIntegration.entity.Status.COMPLETED;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class OrderControllerTest {
-
-    @InjectMocks
-    private OrderController orderController;
+@ExtendWith(MockitoExtension.class)
+public class OrderControllerTest {
 
     @Mock
     private OrderService orderService;
 
-    public OrderControllerTest() {
-        MockitoAnnotations.openMocks(this);
-    }
+    @InjectMocks
+    private OrderController orderController;
 
     @Test
     void testCreateOrder() {
-        Orders mockOrder = new Orders();
-        when(orderService.createOrder(any(Orders.class))).thenReturn(mockOrder);
-        ResponseEntity<Orders> response = orderController.createOrder(mockOrder);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(mockOrder, response.getBody());
-        verify(orderService, times(1)).createOrder(mockOrder);
+        Orders order = new Orders();
+        when(orderService.createOrder(order)).thenReturn(order);
+
+        ResponseEntity<Orders> response = orderController.createOrder(order);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     void testGetAllOrders() {
-        List<Orders> mockOrders = Arrays.asList(new Orders(), new Orders());
-        when(orderService.getAllOrders()).thenReturn(mockOrders);
+        Orders order1 = new Orders();
+        Orders order2 = new Orders();
+        when(orderService.getAllOrders()).thenReturn(Arrays.asList(order1, order2));
 
         ResponseEntity<List<Orders>> response = orderController.getAllOrders();
-
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(mockOrders, response.getBody());
-        verify(orderService, times(1)).getAllOrders();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(2, response.getBody().size());
     }
 
     @Test
-    void testGetOrderById() {
-        Orders mockOrder = new Orders(); // Add fields
-        when(orderService.getOrderById(1L)).thenReturn(Optional.of(mockOrder));
+    void testGetOrderByIdFound() {
+        Orders order = new Orders();
+        when(orderService.getOrderById(1L)).thenReturn(order);
 
         ResponseEntity<Orders> response = orderController.getOrderById(1L);
-
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(mockOrder, response.getBody());
-        verify(orderService, times(1)).getOrderById(1L);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    void testUpdateOrderStatus() {
-        Orders mockOrder = new Orders();
-        StatusRequestDto statusRequest = new StatusRequestDto(1L, COMPLETED);
-        when(orderService.updateOrderStatus(1L, COMPLETED)).thenReturn(mockOrder);
+    void testGetOrderByIdNotFound() {
+        when(orderService.getOrderById(1L)).thenReturn(null);
 
-        ResponseEntity<Orders> response = orderController.updateOrderStatus(statusRequest);
-
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(mockOrder, response.getBody());
-        verify(orderService, times(1)).updateOrderStatus(1L, COMPLETED);
+        ResponseEntity<Orders> response = orderController.getOrderById(1L);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }

@@ -1,5 +1,9 @@
 body {
-    background: #ddd3;
+    background: rgba(0, 0, 0, 0.2);
+    background-image: url("/assets/bg.jpg");
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
     height: 100vh;
     display: flex;
     font-family: Muli;
@@ -7,6 +11,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 
 .card {
     margin: auto;

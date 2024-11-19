@@ -34,8 +34,6 @@ public class RazorpayRequest {
         private String contact;
         private String email;
 
-
-        // Getters and Setters
     }
 
     @Data
@@ -46,7 +44,5 @@ public class RazorpayRequest {
         private boolean sms;
         private boolean email;
 
-
-        // Getters and Setters
     }
 }

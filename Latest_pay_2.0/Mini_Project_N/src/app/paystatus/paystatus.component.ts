@@ -16,7 +16,7 @@ import { take } from 'rxjs';
 })
 export class PaystatusComponent implements OnInit {
 goToPaymentPage() {
-this.router.navigate(['/payment-page']);
+this.router.navigate(['']);
 }
   currentDate: Date = new Date();
   status: boolean = true;

@@ -3,6 +3,7 @@ package com.payment.paymentIntegration.service;
 
 import com.payment.paymentIntegration.entity.Orders;
 import com.payment.paymentIntegration.entity.PaymentResponse;
+import com.payment.paymentIntegration.exception.PaymentResponseNotFoundException;
 import com.payment.paymentIntegration.repository.PaymentResponseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,21 +27,16 @@ public class PaymentResponseService {
         return paymentResponseRepository.findAll();
     }
 
-    public Optional<PaymentResponse> getPaymentDetailsByOrderId(Long orderId) {
-
+    public PaymentResponse getPaymentDetailsByOrderId(Long orderId)
+    {
         if(paymentResponseRepository.existsById(orderId))
         {
-            Optional<PaymentResponse> paymentObject = paymentResponseRepository.findByOrderId(orderId);
-            return paymentObject;
-
+            return paymentResponseRepository.findByOrderId(orderId).get();
         }
         else{
-            return Optional.empty();
+           throw new PaymentResponseNotFoundException("Payment response for order ID " + orderId + " not found");
         }
 
     }
 
-//    public Optional<PaymentResponse> getPaymentDetailsByPaymentId(String paymentId) {
-//        return Optional.ofNullable(paymentResponseRepository.findByPaymentId(paymentId));
-//    }
 }

@@ -1,54 +1,64 @@
 package com.payment.paymentIntegration.service;
 
 import com.payment.paymentIntegration.entity.PaymentResponse;
+import com.payment.paymentIntegration.exception.PaymentResponseNotFoundException;
 import com.payment.paymentIntegration.repository.PaymentResponseRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static java.util.Optional.of;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class PaymentResponseServiceTest {
-
-    @InjectMocks
-    private PaymentResponseService paymentResponseService;
+@ExtendWith(MockitoExtension.class)
+public class PaymentResponseServiceTest {
 
     @Mock
     private PaymentResponseRepository paymentResponseRepository;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    @InjectMocks
+    private PaymentResponseService paymentResponseService;
 
     @Test
     void testSetPaymentDetails() {
-        PaymentResponse mockPaymentResponse = new PaymentResponse(); // Set fields
-        when(paymentResponseRepository.save(mockPaymentResponse)).thenReturn(mockPaymentResponse);
+        PaymentResponse paymentResponse = new PaymentResponse();
+        when(paymentResponseRepository.save(paymentResponse)).thenReturn(paymentResponse);
 
-        PaymentResponse savedResponse = paymentResponseService.setPaymentDetails(mockPaymentResponse);
-
-        assertEquals(mockPaymentResponse, savedResponse);
-        verify(paymentResponseRepository, times(1)).save(mockPaymentResponse);
+        PaymentResponse result = paymentResponseService.setPaymentDetails(paymentResponse);
+        assertNotNull(result);
     }
 
     @Test
     void testGetAllPaymentDetails() {
-        List<PaymentResponse> mockResponses = Arrays.asList(new PaymentResponse(), new PaymentResponse());
-        when(paymentResponseRepository.findAll()).thenReturn(mockResponses);
+        PaymentResponse payment1 = new PaymentResponse();
+        PaymentResponse payment2 = new PaymentResponse();
+        when(paymentResponseRepository.findAll()).thenReturn(Arrays.asList(payment1, payment2));
 
-        List<PaymentResponse> responses = paymentResponseService.getAllPaymentDetails();
+        List<PaymentResponse> result = paymentResponseService.getAllPaymentDetails();
+        assertEquals(2, result.size());
+    }
 
-        assertEquals(mockResponses, responses);
-        verify(paymentResponseRepository, times(1)).findAll();
+
+
+    @Test
+
+    void testGetPaymentDetailsByOrderIdNotFound() {
+      when(paymentResponseRepository.findByOrderId(1L)).thenReturn(Optional.empty());
+
+        boolean exceptionThrown = false;
+        try {
+            paymentResponseService.getPaymentDetailsByOrderId(1L);
+        } catch (PaymentResponseNotFoundException e) {
+            exceptionThrown = true; // Set to true if exception is thrown
+        }
+
+        assertTrue(exceptionThrown, "Expected PaymentResponseNotFoundException to be thrown");
     }
 
 

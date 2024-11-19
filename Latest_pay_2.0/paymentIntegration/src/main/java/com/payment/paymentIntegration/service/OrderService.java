@@ -6,6 +6,7 @@ import com.payment.paymentIntegration.entity.Status;
 import com.payment.paymentIntegration.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.payment.paymentIntegration.exception.OrderNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +28,15 @@ public class OrderService {
     }
 
     // Method to get an order by ID
-    public Optional<Orders> getOrderById(Long orderId)
+    public Orders getOrderById(Long orderId)
     {
+        Optional<Orders> optionalOrder = ordersRepository.findById(orderId);
 
-        return ordersRepository.findById(orderId);
+        if (optionalOrder.isPresent()) {
+            return optionalOrder.get();
+        } else {
+            throw new OrderNotFoundException("Order with ID " + orderId + " not found");
+        }
     }
 
 
@@ -45,7 +51,7 @@ public class OrderService {
             return ordersRepository.save(existingOrder);
         }
         else {
-            return null;
+            throw  new  OrderNotFoundException("Order with ID " + orderId + " not found");
         }
     }
 }

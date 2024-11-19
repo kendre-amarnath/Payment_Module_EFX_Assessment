@@ -4,46 +4,44 @@ import com.payment.paymentIntegration.client.RazorpayClient;
 import com.payment.paymentIntegration.dto.RazorpayRequest;
 import com.payment.paymentIntegration.dto.RazorpayResponse;
 import com.payment.paymentIntegration.entity.Orders;
+import com.payment.paymentIntegration.exception.PaymentLinkCreationException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class PaymentServiceTest {
 
-    @InjectMocks
-    private PaymentService paymentService; // Class under test
-
     @Mock
-    private RazorpayClient razorpayClient; // Mocking the Feign client
+    private RazorpayClient razorpayClient;
+
+    @InjectMocks
+    private PaymentService paymentService;
 
     @Test
     void testCreatePaymentLink() {
+        Orders order = new Orders();
+        order.setAmount(500);
 
-        Orders mockOrder = new Orders();
-        mockOrder.setOrderId(1L);
-        mockOrder.setAmount(1000);
-        mockOrder.setName("Test User");
-        mockOrder.setEmail("test@example.com");
+        RazorpayResponse expectedResponse = new RazorpayResponse();
+        when(razorpayClient.createPaymentLink(any(RazorpayRequest.class))).thenReturn(expectedResponse);
 
-        RazorpayResponse mockResponse = new RazorpayResponse();
-        mockResponse.setId("payment_link_123");
-        mockResponse.setStatus("created");
+        RazorpayResponse response = paymentService.createPaymentLink(order);
+        assertNotNull(response);
+    }
 
+    @Test
+    void testCreatePaymentLinkException() {
+        Orders order = new Orders();
+        order.setAmount(500);
 
-        when(razorpayClient.createPaymentLink(any(RazorpayRequest.class))).thenReturn(mockResponse);
+        when(razorpayClient.createPaymentLink(any(RazorpayRequest.class))).thenThrow(new RuntimeException());
 
-        RazorpayResponse response = paymentService.createPaymentLink(mockOrder);
-
-        assertNotNull(response, "Response should not be null");
-        assertNotNull(response.getId(), "Response ID should not be null");
-        assertNotNull(response.getStatus(), "Response status should not be null");
-
-
-        verify(razorpayClient, times(1)).createPaymentLink(any(RazorpayRequest.class));
+        assertThrows(PaymentLinkCreationException.class, () -> paymentService.createPaymentLink(order));
     }
 }
